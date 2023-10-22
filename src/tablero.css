@@ -1,0 +1,73 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 103vh;
+    margin: 0;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 10px;
+    width: 100%;
+    max-width: 400px; 
+}
+
+
+td {
+    width: 14%; 
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid black;
+    font-size: 0.8em; 
+}
+
+.amarillo {
+    background-color: lightyellow;
+}
+
+.verde {
+    background-color: lightgreen;
+}
+
+.rojo {
+    background-color: rgb(124, 21, 21);
+}
+
+.azul {
+    background-color: lightblue;
+}
+
+#vacio {
+    background-color: white;
+    border: none;
+    background-color: lightblue;
+}
+
+img {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+td.img{
+    display: inline;
+}
+
+.fueraCasa{
+    margin: 0px;
+    display: inline-block;
+    width: 0.6vw;
+    height: 1.3vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.fichas{
+    display: inline;
+    width: 3vw;
+}
+
+

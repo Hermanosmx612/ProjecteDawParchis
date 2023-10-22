@@ -1,0 +1,16 @@
+{
+  "name": "nuevoparchis",
+  "version": "1.0.0",
+  "description": "Parchís: ¡El Juego de Mesa Clásico! ¡Bienvenido a Parchís, el emocionante juego de mesa clásico que ha entretenido a personas de todas las edades durante generaciones! 😄 Prepárate para una experiencia llena de emoción y estrategia mientras compites para llevar tus fichas desde la salida hasta el centro del tablero. ¡Vamos a jugar!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jasmine-browser-runner": "^2.3.0",
+    "jasmine-core": "^5.1.1"
+  }
+}
