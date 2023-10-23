@@ -18,7 +18,7 @@ export class GameStatus {
     this.dados = 0;
     this.estado = "en_curso";
     this.numeroTirada = 0;
-
+    this.seguros = [5, 12, 17, 22, 29, 34, 39, 46, 51, 56, 63, 68];
 
     this.posiToDelete = 0;
     this.sixInRow = 0;
@@ -161,7 +161,8 @@ export class GameStatus {
     let actualPlayer = this.players[this.turno];
     for(const tablero of game.tablero){
       for(const token of tablero.fichas){
-        if(token.numCasilla === posiAdvance){
+        const segurosArray = game.seguros;
+        if(token.numCasilla === posiAdvance && !segurosArray.includes(posiAdvance)){
           if (tablero.fichas.length === 1 && token.color !== actualPlayer.colorFichas) {
             return true;
           }

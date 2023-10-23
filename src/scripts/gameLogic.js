@@ -111,7 +111,7 @@ export function compIfAllBlocked(game) {
   for (let i = 0; i < posiTokens.length; i++) {
     console.log("Entra a ponerToArriveTokens");
     if (posiTokens[i] + game.dados > 68) {
-      posiToArriveTokens.push(posiTokens[i] + game.dados - 68);
+      posiToArriveTokens.push((posiTokens[i] + game.dados) - 68);
     } else {
       posiToArriveTokens.push(posiTokens[i] + game.dados);
     }
