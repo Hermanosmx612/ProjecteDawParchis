@@ -75,28 +75,28 @@ export function manejarClicEnFicha(game, posicionConLetras, gameView) {
   let canMove = compPuente(posicionNumeros, posiAdvance, game);
   console.log(canMove);
   if (canMove) {
-    
     if (game.compIfKill(posiAdvance, game)) {
-      console.log("Entra a la funcion de matar")
+      console.log("Entra a la funcion de matar");
       let colourDel = killBoardToken(posiAdvance, game);
       changeStatusTokenWithColor(game, colourDel);
       gameView.drawTokenHouse(game, colourDel);
+      game.moverFichaTablero(posiAdvance);
+      game.borrarFichaTablero(posicionNumeros);
+      gameView.removeTokensBoard();
+      gameView.drawTokensBoard();
+      addEventToCount20(game,gameView);
 
-    } else {      
-
-      if (game.dados === 7 || game.dados === 6) {
-        game.dados = 6;
-        game.sixInRow += 1;
-        game.posiToDelete = posiAdvance;
-        console.log(game.sixInRow);
-        console.log(game.posiToDelete);
-      }
-
+    } else {
+      game.moverFichaTablero(posiAdvance);
+      game.borrarFichaTablero(posicionNumeros);
+      gameView.removeTokensBoard();
+      gameView.drawTokensBoard();
     }
-    game.moverFichaTablero(posiAdvance);
-    game.borrarFichaTablero(posicionNumeros);
-    gameView.removeTokensBoard();
-    gameView.drawTokensBoard();
+    if (game.dados === 7 || game.dados === 6) {
+      game.dados = 6;
+      game.sixInRow += 1;
+      game.posiToDelete = posiAdvance;
+    }
   } else {
     if (!compIfAllBlocked(game)) {
       console.log("TODAS BLOQUEADAS");
@@ -105,4 +105,33 @@ export function manejarClicEnFicha(game, posicionConLetras, gameView) {
       habilitarBoton();
     }
   }
+}
+
+
+export function addEventToCount20(game,gameView){
+  let actualPlayer = game.players[game.turno];
+  const fichasNuevas = document.querySelectorAll("." + actualPlayer.colorFichas + ".fueraCasa")
+  fichasNuevas.forEach(ficha => {
+    //ficha.removeEventListener("click")
+    ficha.addEventListener("click",function(event){
+      manejarCount20(game,ficha.classList[2],gameView);
+    });
+
+  });
+}
+
+function manejarCount20(game, posiActual, gameView){
+  let posiActualOnlyNum = parseInt(posiActual.replace(/[^0-9]/g, ""));
+  //let actualPlayer = game.players[game.turno];
+  let posiAvanzar = 0;
+  if(posiActualOnlyNum + 20 > 68){
+    posiAvanzar = (posiActualOnlyNum + 20)-68;
+  }else{
+    posiAvanzar = posiActualOnlyNum + 20;
+  }
+  console.log("La posicion a a Avanzar es: "+posiAvanzar)
+  game.borrarFichaTablero(posiActualOnlyNum);
+  game.moverFichaTablero(posiAvanzar);
+  gameView.removeTokensBoard();
+  gameView.drawTokensBoard();
 }

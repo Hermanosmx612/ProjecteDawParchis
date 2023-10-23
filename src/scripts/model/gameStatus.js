@@ -170,5 +170,11 @@ export class GameStatus {
     }
     return false;
   }
+
+
+
+  count20(game){
+    
+  }
   
 }

@@ -190,4 +190,8 @@ export function killBoardToken(posiAdvance, game) {
     }
   }
   return "";
+
+
+
+  
 }
