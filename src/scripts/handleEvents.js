@@ -75,6 +75,7 @@ export function manejarClicEnFicha(game, posicionConLetras, gameView) {
   let canMove = compPuente(posicionNumeros, posiAdvance, game);
   console.log(canMove);
   if (canMove) {
+    
     if (game.compIfKill(posiAdvance, game)) {
       console.log("Entra a la funcion de matar")
       let colourDel = killBoardToken(posiAdvance, game);

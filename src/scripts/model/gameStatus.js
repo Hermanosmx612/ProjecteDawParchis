@@ -1,6 +1,6 @@
 import { Player } from "./Player.js";
 import { Board } from "./Board.js";
-import { aleatoriNumber, changeStatusToken } from "../gameLogic.js";
+import { aleatoriNumber, changeStatusToken, knowPosiTokens, encontrarElementosRepetidos } from "../gameLogic.js";
 import { mostrarDado } from "../view.js";
 import { manejarClicEnFicha } from "../handleEvents.js";
 import { GameView } from "./GameView.js";
@@ -69,9 +69,21 @@ export class GameStatus {
       console.log(ficha.classList[0]);
       if (jugadorActual.colorFichas === ficha.classList[0]) {
         ficha.removeEventListener("click", manejarClicEnFicha);
-        ficha.addEventListener("click", function () {
-          manejarClicEnFicha(game, ficha.classList[2],gameView);
-        });
+          let posiTokens = knowPosiTokens(game);
+          let repeatedElements = encontrarElementosRepetidos(posiTokens);
+          if((game.dados === 6 || game.dados === 7) && repeatedElements.length !== 0){
+            let posicionNumeros = parseInt(ficha.classList[2].replace(/[^0-9]/g, ""));
+            if(repeatedElements.includes(posicionNumeros)){
+              ficha.addEventListener("click", function () {
+                manejarClicEnFicha(game, ficha.classList[2],gameView);
+              });
+            }
+          }else{
+            ficha.addEventListener("click", function () {
+              manejarClicEnFicha(game, ficha.classList[2],gameView);
+            });
+          }
+        
       }
     });
   }

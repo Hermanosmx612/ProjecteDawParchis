@@ -98,6 +98,10 @@ export function knowPosiTokens(game) {
   return posiTokens;
 }
 
+export function encontrarElementosRepetidos(arr) {
+  return arr.filter((elemento, indice) => arr.indexOf(elemento) !== indice);
+}
+
 export function compIfAllBlocked(game) {
   let comprobaciones = [];
   let posiTokens = [];
