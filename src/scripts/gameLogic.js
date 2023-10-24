@@ -195,3 +195,75 @@ export function killBoardToken(posiAdvance, game) {
 
   
 }
+
+
+export function knowWhereBridge(game, posiActual, posiAdvance){
+  console.log("Funcion KnowWhereBridge")
+  if (posiAdvance < posiActual) {
+    return KnowWhereBridgeFinalBigInit(posiActual, posiAdvance, game);
+  } else {
+    for (let i = 0; i < game.tablero.length; i++) {
+      let fichas = game.tablero[i].fichas;
+      for (let j = 0; j < fichas.length; j++) {
+        if (i > posiActual + 1 && i <= posiAdvance) {
+          if (fichas.length >= 2) {
+            if (fichas[j].color === fichas[j + 1].color) {
+              return fichas[j].numCasilla;
+            }
+            if (i === posiAdvance) {
+              return posiAdvance;
+            }
+          }
+        }
+      }
+    }
+  }
+  return 0;
+}
+
+export function KnowWhereBridgeFinalBigInit(posiInitial, posiFinal, game){
+  console.log("KnowWhereBridgeFinalBigInit")
+  for (let i = posiInitial; i < 68; i++) {
+    let fichas = game.tablero[i].fichas;
+    for (let j = 0; j < fichas.length; j++) {
+      if (fichas.length >= 2) {
+        if (fichas[j].color === fichas[j + 1].color) {
+          return fichas[j].numCasilla;
+        }
+      }
+    }
+  }
+
+
+  for (let i = 1; i <= posiFinal; i++) {
+    let fichas = game.tablero[i].fichas;
+    for (let j = 0; j < fichas.length; j++) {
+      if (fichas.length >= 2) {
+        if (fichas[j].color === fichas[j + 1].color) {
+          return fichas[j].numCasilla;
+        }
+      }
+    }
+  }
+
+  
+  return 0;
+}
+
+export function knowBridgeMultiColour(posicion, game){
+  if(posicion === 0){
+    posicion = 68;
+  }
+  for (let i = 0; i < 68; i++) {
+    let fichas = game.tablero[i].fichas;
+    for (let j = 0; j < fichas.length; j++) {
+      if(fichas[j].numCasilla === posicion){
+        if(fichas.length >= 2){
+          return posicion - 1;
+        }else{
+          return posicion;
+        }
+      }
+    }
+  }
+}

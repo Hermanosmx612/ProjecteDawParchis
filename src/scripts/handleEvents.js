@@ -5,6 +5,8 @@ import {
   killBoardToken,
   changeStatusToken,
   changeStatusTokenWithColor,
+  knowWhereBridge,
+  knowBridgeMultiColour
 } from "./gameLogic.js";
 import { habilitarBoton, deshabilitarBoton } from "./view.js";
 
@@ -63,6 +65,7 @@ export function manejarClickBoton(game, gameView) {
 }
 
 export function manejarClicEnFicha(game, posicionConLetras, gameView) {
+  let actualPlayer = game.players[game.turno];
   let posicionNumeros = parseInt(posicionConLetras.replace(/[^0-9]/g, ""));
   let posiAdvance = game.dados + posicionNumeros;
   if (posiAdvance > 68) {
@@ -76,7 +79,6 @@ export function manejarClicEnFicha(game, posicionConLetras, gameView) {
   console.log(canMove);
   if (canMove) {
     if (game.compIfKill(posiAdvance, game)) {
-      console.log("Entra a la funcion de matar");
       let colourDel = killBoardToken(posiAdvance, game);
       changeStatusTokenWithColor(game, colourDel);
       gameView.drawTokenHouse(game, colourDel);
@@ -87,6 +89,13 @@ export function manejarClicEnFicha(game, posicionConLetras, gameView) {
       addEventToCount20(game,gameView);
 
     } else {
+      if(posicionNumeros < actualPlayer.limite && posiAdvance >= actualPlayer.limite){
+        console.log("Su casa ya ha pasado")
+        game.moverFichaTablero(actualPlayer.limite);
+        game.borrarFichaTablero(posicionNumeros);
+      }else{
+        console.log("Esta en juego")
+      }
       game.moverFichaTablero(posiAdvance);
       game.borrarFichaTablero(posicionNumeros);
       gameView.removeTokensBoard();
@@ -129,9 +138,45 @@ function manejarCount20(game, posiActual, gameView){
   }else{
     posiAvanzar = posiActualOnlyNum + 20;
   }
-  console.log("La posicion a a Avanzar es: "+posiAvanzar)
-  game.borrarFichaTablero(posiActualOnlyNum);
-  game.moverFichaTablero(posiAvanzar);
-  gameView.removeTokensBoard();
-  gameView.drawTokensBoard();
+  let canMove = compPuente(posiActualOnlyNum, posiAvanzar, game);
+  let posiBridge= knowWhereBridge(game, posiActualOnlyNum, posiAvanzar); // Saber en que posicion esta el puente
+  let compPuenteMultiColour = knowBridgeMultiColour(posiBridge - 1, game); // Saber si detras del puente existe algun puente multicolor
+  
+  if(canMove){
+    if(game.compIfKill(compPuenteMultiColour, game)){
+      let colourDel = killBoardToken(posiAvanzar, game);
+      changeStatusTokenWithColor(game, colourDel);
+      gameView.drawTokenHouse(game, colourDel);
+      game.moverFichaTablero(compPuenteMultiColour);
+      game.borrarFichaTablero(posicionNumeros);
+      gameView.removeTokensBoard();
+      gameView.drawTokensBoard();
+      addEventToCount20(game,gameView);
+    }else{
+      game.borrarFichaTablero(posiActualOnlyNum);
+      game.moverFichaTablero(posiAvanzar);
+      gameView.removeTokensBoard();
+      gameView.drawTokensBoard();
+    }
+    
+  }else{
+  
+    if(game.compIfKill(compPuenteMultiColour, game)){
+      let colourDel = killBoardToken(posiAvanzar, game);
+      changeStatusTokenWithColor(game, colourDel);
+      gameView.drawTokenHouse(game, colourDel);
+      game.moverFichaTablero(compPuenteMultiColour);
+      game.borrarFichaTablero(posicionNumeros);
+      gameView.removeTokensBoard();
+      gameView.drawTokensBoard();
+      addEventToCount20(game,gameView);
+    }else{
+      game.borrarFichaTablero(posiActualOnlyNum);
+      game.moverFichaTablero(posiBridge - 1);
+      gameView.removeTokensBoard();
+      gameView.drawTokensBoard();
+    }
+    
+
+  }
 }

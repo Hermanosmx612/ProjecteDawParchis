@@ -9,10 +9,10 @@ export class GameStatus {
   constructor() {
     this.tablero = new Board();
     this.players = [
-      new Player("Alex", "azul", 22),
-      new Player("Bot1", "rojo", 39,0),
-      new Player("Bot2", "verde", 56),
-      new Player("Bot3", "amarillo", 5),
+      new Player("Alex", "azul", 22, 17),
+      new Player("Bot1", "rojo", 39, 34),
+      new Player("Bot2", "verde", 56, 51),
+      new Player("Bot3", "amarillo", 5, 68),
     ];
     this.turno = 0;
     this.dados = 0;
@@ -162,7 +162,7 @@ export class GameStatus {
     for(const tablero of game.tablero){
       for(const token of tablero.fichas){
         const segurosArray = game.seguros;
-        if(token.numCasilla === posiAdvance && !segurosArray.includes(posiAdvance)){
+        if(token.numCasilla === posiAdvance ){ // && !segurosArray.includes(posiAdvance)
           if (tablero.fichas.length === 1 && token.color !== actualPlayer.colorFichas) {
             return true;
           }
@@ -172,10 +172,6 @@ export class GameStatus {
     return false;
   }
 
-
-
-  count20(game){
-    
-  }
+  
   
 }
