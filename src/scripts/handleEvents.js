@@ -95,9 +95,9 @@ export function manejarClicEnFicha(game, posicionConLetras, gameView) {
         game.borrarFichaTablero(posicionNumeros);
       }else{
         console.log("Esta en juego")
+        game.moverFichaTablero(posiAdvance);
+        game.borrarFichaTablero(posicionNumeros);
       }
-      game.moverFichaTablero(posiAdvance);
-      game.borrarFichaTablero(posicionNumeros);
       gameView.removeTokensBoard();
       gameView.drawTokensBoard();
     }
@@ -119,6 +119,7 @@ export function manejarClicEnFicha(game, posicionConLetras, gameView) {
 
 export function addEventToCount20(game,gameView){
   let actualPlayer = game.players[game.turno];
+  deshabilitarBoton();
   const fichasNuevas = document.querySelectorAll("." + actualPlayer.colorFichas + ".fueraCasa")
   fichasNuevas.forEach(ficha => {
     //ficha.removeEventListener("click")
