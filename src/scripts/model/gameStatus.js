@@ -162,7 +162,7 @@ export class GameStatus {
     for(const tablero of game.tablero){
       for(const token of tablero.fichas){
         const segurosArray = game.seguros;
-        if(token.numCasilla === posiAdvance ){ // && !segurosArray.includes(posiAdvance)
+        if(token.numCasilla === posiAdvance && !segurosArray.includes(posiAdvance)){ // && !segurosArray.includes(posiAdvance)
           if (tablero.fichas.length === 1 && token.color !== actualPlayer.colorFichas) {
             return true;
           }

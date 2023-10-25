@@ -6,7 +6,7 @@ import {
   changeStatusToken,
   changeStatusTokenWithColor,
   knowWhereBridge,
-  knowBridgeMultiColour
+  knowBridgeMultiColour,
 } from "./gameLogic.js";
 import { habilitarBoton, deshabilitarBoton } from "./view.js";
 
@@ -79,22 +79,33 @@ export function manejarClicEnFicha(game, posicionConLetras, gameView) {
   console.log(canMove);
   if (canMove) {
     if (game.compIfKill(posiAdvance, game)) {
-      let colourDel = killBoardToken(posiAdvance, game);
-      changeStatusTokenWithColor(game, colourDel);
-      gameView.drawTokenHouse(game, colourDel);
-      game.moverFichaTablero(posiAdvance);
-      game.borrarFichaTablero(posicionNumeros);
-      gameView.removeTokensBoard();
-      gameView.drawTokensBoard();
-      addEventToCount20(game,gameView);
-
-    } else {
-      if(posicionNumeros < actualPlayer.limite && posiAdvance >= actualPlayer.limite){
-        console.log("Su casa ya ha pasado")
+      if (
+        posicionNumeros < actualPlayer.limite &&
+        posiAdvance >= actualPlayer.limite
+      ) {
+        console.log("Su casa ya ha pasado");
         game.moverFichaTablero(actualPlayer.limite);
         game.borrarFichaTablero(posicionNumeros);
-      }else{
-        console.log("Esta en juego")
+      } else {
+        let colourDel = killBoardToken(posiAdvance, game);
+        changeStatusTokenWithColor(game, colourDel);
+        gameView.drawTokenHouse(game, colourDel);
+        game.moverFichaTablero(posiAdvance);
+        game.borrarFichaTablero(posicionNumeros);
+        gameView.removeTokensBoard();
+        gameView.drawTokensBoard();
+        addEventToCount20(game, gameView);
+      }
+    } else {
+      if (
+        posicionNumeros < actualPlayer.limite &&
+        posiAdvance >= actualPlayer.limite
+      ) {
+        console.log("Su casa ya ha pasado");
+        game.moverFichaTablero(actualPlayer.limite);
+        game.borrarFichaTablero(posicionNumeros);
+      } else {
+        console.log("Esta en juego");
         game.moverFichaTablero(posiAdvance);
         game.borrarFichaTablero(posicionNumeros);
       }
@@ -116,68 +127,92 @@ export function manejarClicEnFicha(game, posicionConLetras, gameView) {
   }
 }
 
-
-export function addEventToCount20(game,gameView){
+export function addEventToCount20(game, gameView) {
   let actualPlayer = game.players[game.turno];
   deshabilitarBoton();
-  const fichasNuevas = document.querySelectorAll("." + actualPlayer.colorFichas + ".fueraCasa")
-  fichasNuevas.forEach(ficha => {
+  const fichasNuevas = document.querySelectorAll(
+    "." + actualPlayer.colorFichas + ".fueraCasa"
+  );
+  fichasNuevas.forEach((ficha) => {
     //ficha.removeEventListener("click")
-    ficha.addEventListener("click",function(event){
-      manejarCount20(game,ficha.classList[2],gameView);
+    ficha.addEventListener("click", function (event) {
+      manejarCount20(game, ficha.classList[2], gameView);
     });
-
   });
 }
 
-function manejarCount20(game, posiActual, gameView){
+function manejarCount20(game, posiActual, gameView) {
+  let actualPlayer = game.players[game.turno];
   let posiActualOnlyNum = parseInt(posiActual.replace(/[^0-9]/g, ""));
   //let actualPlayer = game.players[game.turno];
   let posiAvanzar = 0;
-  if(posiActualOnlyNum + 20 > 68){
-    posiAvanzar = (posiActualOnlyNum + 20)-68;
-  }else{
+  if (posiActualOnlyNum + 20 > 68) {
+    posiAvanzar = posiActualOnlyNum + 20 - 68;
+  } else {
     posiAvanzar = posiActualOnlyNum + 20;
   }
   let canMove = compPuente(posiActualOnlyNum, posiAvanzar, game);
-  let posiBridge= knowWhereBridge(game, posiActualOnlyNum, posiAvanzar); // Saber en que posicion esta el puente
+  let posiBridge = knowWhereBridge(game, posiActualOnlyNum, posiAvanzar); // Saber en que posicion esta el puente
   let compPuenteMultiColour = knowBridgeMultiColour(posiBridge - 1, game); // Saber si detras del puente existe algun puente multicolor
-  
-  if(canMove){
-    if(game.compIfKill(compPuenteMultiColour, game)){
-      let colourDel = killBoardToken(posiAvanzar, game);
-      changeStatusTokenWithColor(game, colourDel);
-      gameView.drawTokenHouse(game, colourDel);
-      game.moverFichaTablero(compPuenteMultiColour);
-      game.borrarFichaTablero(posicionNumeros);
-      gameView.removeTokensBoard();
-      gameView.drawTokensBoard();
-      addEventToCount20(game,gameView);
-    }else{
-      game.borrarFichaTablero(posiActualOnlyNum);
-      game.moverFichaTablero(posiAvanzar);
-      gameView.removeTokensBoard();
-      gameView.drawTokensBoard();
-    }
-    
-  }else{
-  
-    if(game.compIfKill(compPuenteMultiColour, game)){
-      let colourDel = killBoardToken(posiAvanzar, game);
-      changeStatusTokenWithColor(game, colourDel);
-      gameView.drawTokenHouse(game, colourDel);
-      game.moverFichaTablero(compPuenteMultiColour);
-      game.borrarFichaTablero(posicionNumeros);
-      gameView.removeTokensBoard();
-      gameView.drawTokensBoard();
-      addEventToCount20(game,gameView);
-    }else{
-      game.borrarFichaTablero(posiActualOnlyNum);
-      game.moverFichaTablero(posiBridge - 1);
-      gameView.removeTokensBoard();
-      gameView.drawTokensBoard();
-    }
-    
 
+  if (canMove) {
+    if (game.compIfKill(compPuenteMultiColour, game)) {
+      if (posiActualOnlyNum < actualPlayer.limite && posiAdvance >= actualPlayer.limite) {
+        console.log("Su casa ya ha pasado");
+        game.moverFichaTablero(actualPlayer.limite);
+        game.borrarFichaTablero(posiActualOnlyNum);
+      } else {
+        let colourDel = killBoardToken(posiAvanzar, game);
+        changeStatusTokenWithColor(game, colourDel);
+        gameView.drawTokenHouse(game, colourDel);
+        game.moverFichaTablero(compPuenteMultiColour);
+        game.borrarFichaTablero(posiActualOnlyNum);
+        gameView.removeTokensBoard();
+        gameView.drawTokensBoard();
+        addEventToCount20(game, gameView);
+      }
+    } else {
+      if (posiActualOnlyNum < actualPlayer.limite && posiActualOnlyNum >= actualPlayer.limite) {
+        console.log("Su casa ya ha pasado");
+        game.moverFichaTablero(actualPlayer.limite);
+        game.borrarFichaTablero(posiActualOnlyNum);
+      }else{
+        game.borrarFichaTablero(posiActualOnlyNum);
+        game.moverFichaTablero(posiAvanzar);
+        gameView.removeTokensBoard();
+        gameView.drawTokensBoard();
+      }
+      
+    }
+  } else {
+    if (game.compIfKill(compPuenteMultiColour, game)) {
+      if (posiActualOnlyNum < actualPlayer.limite && posiActualOnlyNum >= actualPlayer.limite) {
+        console.log("Su casa ya ha pasado");
+        game.moverFichaTablero(actualPlayer.limite);
+        game.borrarFichaTablero(posiActualOnlyNum);
+      }else{
+        let colourDel = killBoardToken(posiAvanzar, game);
+        changeStatusTokenWithColor(game, colourDel);
+        gameView.drawTokenHouse(game, colourDel);
+        game.moverFichaTablero(compPuenteMultiColour);
+        game.borrarFichaTablero(posiActualOnlyNum);
+        gameView.removeTokensBoard();
+        gameView.drawTokensBoard();
+        addEventToCount20(game, gameView);
+      }
+      
+    } else {
+      if (posiActualOnlyNum < actualPlayer.limite && posiActualOnlyNum >= actualPlayer.limite) {
+        console.log("Su casa ya ha pasado");
+        game.moverFichaTablero(actualPlayer.limite);
+        game.borrarFichaTablero(posiActualOnlyNum);
+      }else{
+        game.borrarFichaTablero(posiActualOnlyNum);
+        game.moverFichaTablero(posiBridge - 1);
+        gameView.removeTokensBoard();
+        gameView.drawTokensBoard();
+      }
+      
+    }
   }
 }

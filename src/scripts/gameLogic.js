@@ -69,12 +69,12 @@ export function compPuente(posiInitial, posiFinal, game) {
     for (let i = 0; i < game.tablero.length; i++) {
       let fichas = game.tablero[i].fichas;
       for (let j = 0; j < fichas.length; j++) {
-        if (i > posiInitial && i <= posiFinal) {
+        if (fichas[j].numCasilla > posiInitial && fichas[j].numCasilla <= posiFinal) {
           if (fichas.length >= 2) {
-            if (fichas[j].color === fichas[j + 1].color) {
+            if ((fichas[j + 1] )&& fichas[j].color === fichas[j + 1].color) {
               return false;
-            }
-            if (i === posiFinal) {
+          }
+            if (fichas[j].numCasilla === posiFinal) {
               return false;
             }
           }
@@ -116,19 +116,24 @@ export function compIfAllBlocked(game) {
       posiToArriveTokens.push(posiTokens[i] + game.dados);
     }
   }
+  console.log(posiTokens.toString())
+  console.log(posiToArriveTokens.toString())
 
+  
   for (let i = 0; i < posiTokens.length; i++) {
+    console.log(compPuente(posiTokens[i], posiToArriveTokens[i], game));
+    console.log(posiTokens.length);
     comprobaciones.push(compPuente(posiTokens[i], posiToArriveTokens[i], game));
-    let todosSonFalse = comprobaciones.every(function (valor) {
-      return valor === false;
-    });
+  }
+  let todosSonFalse = comprobaciones.every(function (valor) {
+    return valor === false;
+  });
 
-    // Verificar el resultado
-    if (todosSonFalse) {
-      return false;
-    } else {
-      return true;
-    }
+  // Verificar el resultado
+  if (todosSonFalse) {
+    return false;
+  } else {
+    return true;
   }
 }
 
