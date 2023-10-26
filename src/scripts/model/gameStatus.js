@@ -1,6 +1,6 @@
 import { Player } from "./Player.js";
 import { Board } from "./Board.js";
-import { aleatoriNumber, changeStatusToken, knowPosiTokens, encontrarElementosRepetidos } from "../gameLogic.js";
+import { aleatoriNumber, changeStatusToken, knowPosiTokens, encontrarElementosRepetidos, compPuente } from "../gameLogic.js";
 import { mostrarDado } from "../view.js";
 import { manejarClicEnFicha } from "../handleEvents.js";
 import { GameView } from "./GameView.js";
@@ -64,6 +64,7 @@ export class GameStatus {
     const fichasNuevas = document.querySelectorAll(
       "." + jugadorActual.colorFichas + ".fueraCasa"
     );
+    let count = 0; // Contador para saber si se le a añadido algun Listener
     fichasNuevas.forEach(function (ficha) {
       console.log(jugadorActual.colorFichas);
       console.log(ficha.classList[0]);
@@ -73,17 +74,29 @@ export class GameStatus {
           let repeatedElements = encontrarElementosRepetidos(posiTokens);
           if((game.dados === 6 || game.dados === 7) && repeatedElements.length !== 0){
             let posicionNumeros = parseInt(ficha.classList[2].replace(/[^0-9]/g, ""));
-            if(repeatedElements.includes(posicionNumeros)){
+            let compSiPuente = compPuente(posicionNumeros, posicionNumeros + game.dados, game);
+            if(repeatedElements.includes(posicionNumeros) && compSiPuente){ // Si el numero ese esta en un puente y ademas puede tirar
+              count ++;
               ficha.addEventListener("click", function () {
                 manejarClicEnFicha(game, ficha.classList[2],gameView);
               });
             }
           }else{
+            count ++;
             ficha.addEventListener("click", function () {
               manejarClicEnFicha(game, ficha.classList[2],gameView);
+              return;
             });
           }
         
+      }
+    });
+    fichasNuevas.forEach(function (ficha) {
+      ficha.removeEventListener("click", manejarClicEnFicha); // Funcion por si al count no se le ha sumado es decir que hay un puente pero no se puede tirar
+      if(count === 0){
+        ficha.addEventListener("click", function () {
+          manejarClicEnFicha(game, ficha.classList[2],gameView);
+        });
       }
     });
   }

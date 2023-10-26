@@ -33,21 +33,22 @@ export function manejarClickBoton(game, gameView) {
   if (game.determinToDeleteSixRow()) {
     if (game.dados === 5 && fichaAMover !== undefined) {
       // Si el dado es 5 y hay fichas en su casa
-
-      if (
-        checkPuedeSalir(
-          jugadorActual.colorFichas,
-          jugadorActual.salida,
-          game,
-          gameView
-        )
-      ) {
+      let result = checkPuedeSalir(jugadorActual.colorFichas,jugadorActual.salida,game,gameView);
+      console.log("El resultado es: "+result)
+      if (result === true) { // Saber si puede salir
         //console.log("Si que puede salir");
         game.getHouseCard(jugadorActual.colorFichas, jugadorActual.salida);
         gameView.removeHouseToken(jugadorActual.colorFichas);
         gameView.removeTokensBoard(game);
         gameView.drawTokensBoard(game);
-      } else {
+      } else if(result === "FichaMuerta"){
+        console.log("Ha matado una ficha saliendo de csasa")
+        game.getHouseCard(jugadorActual.colorFichas, jugadorActual.salida);
+        gameView.removeHouseToken(jugadorActual.colorFichas);
+        gameView.removeTokensBoard(game);
+        gameView.drawTokensBoard(game);
+        addEventToCount20(game,gameView);
+      }else {
         game.agregarEventosDeClicFichas(game, gameView);
       }
     } else if (fichaAMover2 !== undefined) {
@@ -68,6 +69,7 @@ export function manejarClicEnFicha(game, posicionConLetras, gameView) {
   let actualPlayer = game.players[game.turno];
   let posicionNumeros = parseInt(posicionConLetras.replace(/[^0-9]/g, ""));
   let posiAdvance = game.dados + posicionNumeros;
+  let posiAdvanceSinRestar = game.dados + posicionNumeros;
   if (posiAdvance > 68) {
     posiAdvance = posiAdvance - 68;
   }
@@ -80,8 +82,8 @@ export function manejarClicEnFicha(game, posicionConLetras, gameView) {
   if (canMove) {
     if (game.compIfKill(posiAdvance, game)) {
       if (
-        posicionNumeros < actualPlayer.limite &&
-        posiAdvance >= actualPlayer.limite
+        posicionNumeros <= actualPlayer.limite &&
+        posiAdvanceSinRestar >= actualPlayer.limite
       ) {
         console.log("Su casa ya ha pasado");
         game.moverFichaTablero(actualPlayer.limite);
@@ -99,7 +101,7 @@ export function manejarClicEnFicha(game, posicionConLetras, gameView) {
     } else {
       if (
         posicionNumeros < actualPlayer.limite &&
-        posiAdvance >= actualPlayer.limite
+        posiAdvanceSinRestar >= actualPlayer.limite
       ) {
         console.log("Su casa ya ha pasado");
         game.moverFichaTablero(actualPlayer.limite);
@@ -146,18 +148,19 @@ function manejarCount20(game, posiActual, gameView) {
   let posiActualOnlyNum = parseInt(posiActual.replace(/[^0-9]/g, ""));
   //let actualPlayer = game.players[game.turno];
   let posiAvanzar = 0;
+  let posiAdvanceSinRestar = 20 + posiActualOnlyNum;
   if (posiActualOnlyNum + 20 > 68) {
     posiAvanzar = posiActualOnlyNum + 20 - 68;
   } else {
     posiAvanzar = posiActualOnlyNum + 20;
   }
   let canMove = compPuente(posiActualOnlyNum, posiAvanzar, game);
-  let posiBridge = knowWhereBridge(game, posiActualOnlyNum, posiAvanzar); // Saber en que posicion esta el puente
+  let posiBridge = knowWhereBridge(game, posiActualOnlyNum + 1, posiAvanzar); // Saber en que posicion esta el puente
   let compPuenteMultiColour = knowBridgeMultiColour(posiBridge - 1, game); // Saber si detras del puente existe algun puente multicolor
 
   if (canMove) {
     if (game.compIfKill(compPuenteMultiColour, game)) {
-      if (posiActualOnlyNum < actualPlayer.limite && posiAdvance >= actualPlayer.limite) {
+      if (posiActualOnlyNum <= actualPlayer.limite && posiAdvanceSinRestar >= actualPlayer.limite) {
         console.log("Su casa ya ha pasado");
         game.moverFichaTablero(actualPlayer.limite);
         game.borrarFichaTablero(posiActualOnlyNum);
@@ -172,7 +175,7 @@ function manejarCount20(game, posiActual, gameView) {
         addEventToCount20(game, gameView);
       }
     } else {
-      if (posiActualOnlyNum < actualPlayer.limite && posiActualOnlyNum >= actualPlayer.limite) {
+      if (posiActualOnlyNum <= actualPlayer.limite && posiAdvanceSinRestar >= actualPlayer.limite) {
         console.log("Su casa ya ha pasado");
         game.moverFichaTablero(actualPlayer.limite);
         game.borrarFichaTablero(posiActualOnlyNum);
@@ -186,7 +189,7 @@ function manejarCount20(game, posiActual, gameView) {
     }
   } else {
     if (game.compIfKill(compPuenteMultiColour, game)) {
-      if (posiActualOnlyNum < actualPlayer.limite && posiActualOnlyNum >= actualPlayer.limite) {
+      if (posiActualOnlyNum <= actualPlayer.limite && posiAdvanceSinRestar >= actualPlayer.limite) {
         console.log("Su casa ya ha pasado");
         game.moverFichaTablero(actualPlayer.limite);
         game.borrarFichaTablero(posiActualOnlyNum);
@@ -202,7 +205,7 @@ function manejarCount20(game, posiActual, gameView) {
       }
       
     } else {
-      if (posiActualOnlyNum < actualPlayer.limite && posiActualOnlyNum >= actualPlayer.limite) {
+      if (posiActualOnlyNum <= actualPlayer.limite && posiAdvanceSinRestar >= actualPlayer.limite) {
         console.log("Su casa ya ha pasado");
         game.moverFichaTablero(actualPlayer.limite);
         game.borrarFichaTablero(posiActualOnlyNum);

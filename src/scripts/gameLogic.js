@@ -21,10 +21,11 @@ export function checkPuedeSalir(colourToken, numSalida, game, gameView) {
             fichas[j].color !== colourToken ||
             fichas[j + 1] !== colourToken
           ) {
+            console.log("Aqui devuelvo Ficha muerta")
             let diffColour = game.removeLastToken(numSalida, colourToken);
             changeStatusTokenWithColor(game, diffColour);
             gameView.drawTokenHouse(game, diffColour);
-            return true;
+            return "FichaMuerta";
           }
         }
       }
@@ -64,7 +65,7 @@ function compPuenteInitMoreFin(posiInitial, posiFinal, game) {
 
 export function compPuente(posiInitial, posiFinal, game) {
   if (posiFinal < posiInitial) {
-    return compPuenteInitMoreFin(posiInitial, posiFinal, game);
+    return compPuenteInitMoreFin(posiInitial + 1, posiFinal, game);
   } else {
     for (let i = 0; i < game.tablero.length; i++) {
       let fichas = game.tablero[i].fichas;
