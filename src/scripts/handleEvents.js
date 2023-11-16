@@ -9,8 +9,9 @@ import {
   knowBridgeMultiColour,
 } from "./gameLogic.js";
 import { habilitarBoton, deshabilitarBoton } from "./view.js";
-
+import { updateGameState, getIdGame, readGameState} from "./services/http.js";
 export function manejarClickBoton(game, gameView) {
+
   deshabilitarBoton();
   if (game.dados !== 6) {
     // Cuando sea un 6 repetira la tirada
@@ -29,6 +30,13 @@ export function manejarClickBoton(game, gameView) {
   if (game.dados === 6 && fichaAMover === undefined) {
     game.dados = 7;
   }
+
+
+
+  //Actualizar el gameStatus de supabase
+  updateGameState(game, getIdGame())
+  console.log(readGameState(getIdGame()))
+ 
 
   if (game.determinToDeleteSixRow()) {
     if (game.dados === 5 && fichaAMover !== undefined) {
