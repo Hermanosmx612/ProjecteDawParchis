@@ -10,7 +10,7 @@ import {
 } from "./gameLogic.js";
 import { habilitarBoton, deshabilitarBoton } from "./view.js";
 import { updateGameState, getIdGame, readGameState} from "./services/http.js";
-export function manejarClickBoton(game, gameView) {
+export async function manejarClickBoton(game, gameView) {
 
   deshabilitarBoton();
   if (game.dados !== 6) {
@@ -34,8 +34,9 @@ export function manejarClickBoton(game, gameView) {
 
 
   //Actualizar el gameStatus de supabase
-  updateGameState(game, getIdGame())
-  console.log(readGameState(getIdGame()))
+  await updateGameState(game, getIdGame()) //Hacer un update con el nuevo estado
+  Object.assign(game, await readGameState(getIdGame())) // Asignar el game al nuevo Game
+  console.log(game)
  
 
   if (game.determinToDeleteSixRow()) {

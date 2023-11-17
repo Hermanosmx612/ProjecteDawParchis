@@ -273,3 +273,5 @@ export function knowBridgeMultiColour(posicion, game){
     }
   }
 }
+
+
