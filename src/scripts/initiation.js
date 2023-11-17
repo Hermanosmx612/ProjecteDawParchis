@@ -18,6 +18,7 @@ export function putTokens (){
     let count = 0;
     let homeTokens = document.querySelectorAll("#home");
     for (let casilla of homeTokens) {
+      console.log("Hola")
       let childrenn = casilla.children;
       let count2 = 1;
       for (let atributes of childrenn) {

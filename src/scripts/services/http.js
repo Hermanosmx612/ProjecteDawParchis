@@ -13,7 +13,7 @@ export async function createGameState(token, data) {
       Prefer : "return=representation",
 
     };
-    const response = await supaRequest(url, 'post', headersAux, data);
+    const response = await supaRequest(url, 'post', headersAux, {partida : data });
     const resolvedId = response[0]?.id;
     console.log(resolvedId);
     saveIdLocalStorage(resolvedId);
@@ -27,7 +27,7 @@ export async function createGameState(token, data) {
       Authorization: `Bearer ${SUPABASE_KEY}`,
       Prefer: 'return=minimal',
     };
-    const response = await supaRequest(url, 'PATCH', headersAux, data);
+    const response = await supaRequest(url, 'PATCH', headersAux, {partida : data });
     
     return response;
   }
@@ -57,11 +57,11 @@ export async function createGameState(token, data) {
     }
 }
 
-export async function supaRequest(url,method,headers, state){
+export async function supaRequest(url,method,headers, body){
     const response = await fetch(url,{
         method,
         headers,
-        body: JSON.stringify({partida : state })
+        body: JSON.stringify(body)
         
     })
 
@@ -84,5 +84,18 @@ export function saveIdLocalStorage(id){
 export function getIdGame(){
     return localStorage.getItem('idPartidaActual');
 }
+  
+export async function signUpSupabase(email, password) {
+    const url = `https://pkmqkhcplryghnhstjpn.supabase.co/auth/v1/signup`;
+    const data = await supaRequest(url, 'post', headers, { email, password });
+    return data;
+  }
+
+
+export async function loginSupabase(email, password) {
+    const url = `https://pkmqkhcplryghnhstjpn.supabase.co/auth/v1/token?grant_type=password`;
+    const data = await supaRequest(url, 'post', headers, { email, password });
+    return data;
+  }
 
 
