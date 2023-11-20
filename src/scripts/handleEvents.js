@@ -35,7 +35,8 @@ export async function manejarClickBoton(game, gameView) {
 
   //Actualizar el gameStatus de supabase
   await updateGameState(game, getIdGame()) //Hacer un update con el nuevo estado
-  Object.assign(game, await readGameState(getIdGame())) // Asignar el game al nuevo Game
+  
+  Object.assign(game, await readGameState(getIdGame()).partida) // Asignar el game al nuevo Game
   console.log(game)
  
 

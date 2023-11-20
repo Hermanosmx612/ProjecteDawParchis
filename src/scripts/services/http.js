@@ -33,6 +33,19 @@ export async function createGameState(token, data) {
   }
 
 
+  export async function deleteGameState(id){
+    const url = `https://pkmqkhcplryghnhstjpn.supabase.co/rest/v1/GameState?id=eq.${id}`;
+    const headersAux = {
+      ...headers,
+      Authorization: `Bearer ${SUPABASE_KEY}`,
+      Prefer: 'return=minimal',
+    };
+    const response = await supaRequest(url, 'PATCH', headersAux, {partida : "" });
+    
+    return response;
+  }
+
+
   export async function readGameState(id) {
     try {
         const response = await fetch(`https://pkmqkhcplryghnhstjpn.supabase.co/rest/v1/GameState?id=eq.${id}&select=partida`, {

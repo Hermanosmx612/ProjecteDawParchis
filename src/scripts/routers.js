@@ -31,8 +31,7 @@ export function route(ruta) {
         //} else {
         main.append(tablero())
         putTokens();
-        var body = document.body;
-        body.style.backgroundColor = 'white';
+        document.body.style.backgroundColor = 'white';
         //}
         break;
       case '#/allgames':
