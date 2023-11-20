@@ -29,6 +29,8 @@ export function registerForm() {
       const password = divLogin.querySelector('#signuppassword').value;
       const dataLogin = await registerUser(email, password);
       console.log(dataLogin);
+      window.location.hash = "#/login";
+
     });
   
     return divLogin;
