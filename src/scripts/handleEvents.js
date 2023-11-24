@@ -73,6 +73,7 @@ export async function manejarClickBoton(game, gameView) {
     gameView.drawTokensBoard(game);
     habilitarBoton();
   }
+  
 }
 
 export function manejarClicEnFicha(game, posicionConLetras, gameView) {

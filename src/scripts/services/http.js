@@ -96,6 +96,22 @@ export async function loginSupabase(email, password) {
     const url = `https://pkmqkhcplryghnhstjpn.supabase.co/auth/v1/token?grant_type=password`;
     const data = await supaRequest(url, 'post', headers, { email, password });
     return data;
+}
+
+
+export function knowLogin(){
+  console.log(localStorage.getItem('idPartidaActual'))
+  if(localStorage.getItem('idPartidaActual') === null){
+    return "disabled";
   }
+  return "";
+}
+
+export function knowDisabled(){
+  if(localStorage.getItem('idPartidaActual') === null){
+    return "false";
+  }
+  return "true";
+}
 
 

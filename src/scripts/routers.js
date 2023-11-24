@@ -2,6 +2,7 @@ import { loginForm } from "./views/login.js";
 import { registerForm } from "./views/register.js";
 import { tablero } from "./views/templateTablero.js";
 import { putTokens } from "./initiation.js";
+import { menu } from "./views/menu.js";
 
 export function route(ruta) {
     // let params = ruta.split('?')[1];
@@ -24,6 +25,7 @@ export function route(ruta) {
         break;
       case '#/game':
         main.innerHTML = '';
+        main.append(menu())
         //if (params.get('id')) {
         //  generateGame(params.get('id')).then((divs) => main.append(...divs));
         //} else if (localStorage.getItem('gameId')) {

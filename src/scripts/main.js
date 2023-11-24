@@ -5,7 +5,6 @@ import { GameView } from "./model/GameView.js";
 import { createGameState, getIdGame} from "./services/http.js";
 import { route } from "./routers.js";
 
-
 document.addEventListener("DOMContentLoaded", () => {
   route(window.location.hash);
   window.addEventListener('hashchange', () => {
