@@ -34,8 +34,8 @@ export async function manejarClickBoton(game, gameView) {
 
 
   //Actualizar el gameStatus de supabase
+  console.log(getIdGame())
   await updateGameState(game, getIdGame()) //Hacer un update con el nuevo estado
-  
   Object.assign(game, await readGameState(getIdGame()).partida) // Asignar el game al nuevo Game
   console.log(game)
  
@@ -73,10 +73,9 @@ export async function manejarClickBoton(game, gameView) {
     gameView.drawTokensBoard(game);
     habilitarBoton();
   }
-  
 }
 
-export function manejarClicEnFicha(game, posicionConLetras, gameView) {
+export async function manejarClicEnFicha(game, posicionConLetras, gameView) {
   let actualPlayer = game.players[game.turno];
   let posicionNumeros = parseInt(posicionConLetras.replace(/[^0-9]/g, ""));
   let posiAdvance = game.dados + posicionNumeros;
@@ -138,6 +137,8 @@ export function manejarClicEnFicha(game, posicionConLetras, gameView) {
       habilitarBoton();
     }
   }
+  await updateGameState(game, getIdGame()) //Hacer un update con el nuevo estado
+  Object.assign(game, await readGameState(getIdGame()).partida) // Asignar el game al nuevo Gam
 }
 
 export function addEventToCount20(game, gameView) {

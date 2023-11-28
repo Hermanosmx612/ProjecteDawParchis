@@ -3,11 +3,11 @@ import { GameStatus } from "../model/gameStatus.js";
 import { GameView } from "../model/GameView.js";
 import { createTable } from "../initiation.js";
 import { putTokens } from "../initiation.js";
-import { createGameState } from "../services/http.js";
+import { createGameState, getIdGame, readGameState } from "../services/http.js";
 
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBrbXFraGNwbHJ5Z2huaHN0anBuIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTkyNjYzMDgsImV4cCI6MjAxNDg0MjMwOH0.hEB-v6NUkWsWW0V26PFR31H0tuI4EiiMucYOc-1cj0U'
 
-export function tablero(){
+export function tablero(gameState){
     const divLogin = document.createElement('div');
 
 
@@ -192,13 +192,22 @@ export function tablero(){
 
 </table>
 <button id="prueba">Recorrer array</button>`
-
-
-
+let gameView;
 let game = new GameStatus();
-game.tablero = createTable();
-let gameView = new GameView(game);
-createGameState(SUPABASE_KEY, game)
+console.log(gameState)
+console.log(getIdGame())
+if(getIdGame()){
+  Object.assign(game, gameState)
+  gameView = new GameView(game);
+}else{
+  game.tablero = createTable();
+  gameView = new GameView(game);
+}
+console.log("Game: "+game.tablero)
+ if(!localStorage.getItem("idPartidaActual")){
+  createGameState(SUPABASE_KEY, game)
+} 
+
 
 divLogin.querySelector("#buttonThrow").addEventListener("click", () => {
       manejarClickBoton(game,gameView);

@@ -26,6 +26,7 @@ export function putTokens (){
           //atributes.addEventListener(click ,moverFichaQueQuieras);
           atributes.src = "images/" + fichas[count];
           atributes.className = "fichas " + colores[count];
+          
           count2++;
         }
       }
