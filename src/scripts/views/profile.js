@@ -1,3 +1,6 @@
+import { updateProfile } from "../services/users.js";
+
+
 export function profileForm(){
     const divLogin = document.createElement('div');
     divLogin.classList.add('formulari_centrat');
@@ -53,14 +56,6 @@ export function profileForm(){
     value = ""
   />
 
-
-  <label for="web"><b>Web Site</b></label>
-  <input
-    type="text"
-    placeholder="web"
-    name="website"
-    value = ""
-  />
 <div>
   <img class="avatar_profile" style="max-width: 200px" id="avatar_prev" src=""/>
 </div>
@@ -81,6 +76,29 @@ export function profileForm(){
   </div>
 </div>
 </form>`;
+
+divLogin.querySelector('#update').addEventListener('click', async () => {
+  const formData = new FormData(divLogin.querySelector('#formProfile'));
+  const {
+    username, full_name, website, avatar,
+  } = Object.fromEntries(formData);
+  console.log({
+    username, full_name, avatar,
+  });
+
+  const dataUpdate = await updateProfile({username, full_name, avatar,});
+
+  route('#/profile');
+});
+
+function encodeImageFileAsURL(element) {
+  const file = element.files[0];
+  if (file) {
+    divLogin.querySelector('#avatar_prev').src = URL.createObjectURL(file);
+  }
+}
+
+divLogin.querySelector('#avatar').addEventListener('change', function () { encodeImageFileAsURL(this); });
 
 
 return divLogin;

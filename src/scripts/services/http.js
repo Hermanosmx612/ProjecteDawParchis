@@ -64,15 +64,17 @@ export async function supaRequest(url,method,headers, body){
         body: JSON.stringify(body)
         
     })
-
+    console.log(response);
     if (response.status >= 200 && response.status <= 300) { // En cas d'error en el servidor
         if (response.headers.get('content-type')) { // Si retorna un JSON
             const returnResponse = await response.json();
+            console.log("Exito")
             return returnResponse;
         }
+        console.log("Error");
         return {}; // Si no contesta res no té content-type i cal retornar un objecte buit per a ser coherent en l'eixida.
       }
-    
+      console.log("Error")
       return Promise.reject(await response.json()); // En cas de problemes en el servidor retornen un reject.
 }
 
@@ -88,6 +90,7 @@ export function getIdGame(){
 export async function signUpSupabase(email, password) {
     const url = `https://pkmqkhcplryghnhstjpn.supabase.co/auth/v1/signup`;
     const data = await supaRequest(url, 'post', headers, { email, password });
+    await putDefaultPhoto();
     return data;
   }
 
@@ -121,4 +124,70 @@ export async function logoutSupabase(token){
   return data;
 }
 
+export async function putDefaultPhoto(){
+  /* try {
+    const defaultPhotoUrl = `https://pkmqkhcplryghnhstjpn.supabase.co/storage/v1/avatars/usuarioSinFoto.jpg`;
 
+    const { data, error } = await supabase
+      .from('profiles')
+      .update({ avatar_url : defaultPhotoUrl })
+      .eq('id', localStorage.getItem("uid"));
+
+    if (error) {
+      throw new Error(`Error al asignar la imagen por defecto al usuario: ${error.message}`);
+    }
+
+    console.log('Imagen por defecto asignada al usuario con éxito:', data);
+  } catch (error) {
+    console.error(error.message);
+  } */
+}
+
+export async function userInfo(fullName, username, uid){
+  console.log("Funcion UserInfo: "+uid)
+  console.log(fullName)
+  console.log(username)
+  const url = `https://pkmqkhcplryghnhstjpn.supabase.co/rest/v1/profiles?id=eq.${uid}`;
+    const headersAux = {
+      ...headers,
+      Authorization: `Bearer ${SUPABASE_KEY}`,
+      Prefer: 'return=representation',
+    };
+    const response = await supaRequest(url, 'PATCH', headersAux, {"username" : `${username}`,  "full_name" : `${fullName}`});
+    return response;
+}
+
+
+export async function fileRequest(url,body,token){
+  const headersFile = {
+      "apiKey": SUPABASE_KEY,
+      "Authorization" :`Bearer ${token}`,
+      "x-upsert": true  // Necessari per a sobreescriure
+  }; 
+  let response = await fetch(`https://pkmqkhcplryghnhstjpn.supabase.co${url}`,{
+      method: 'POST',
+      headers: headersFile,
+      body
+  });
+  if(response.status >=200 && response.status <=300){
+      if(response.headers.get("content-type")){
+          let datos = await response.json(); // Retorna un json amb la ruta relativa. 
+          datos.urlAvatar = `https://pkmqkhcplryghnhstjpn.supabase.co/{url}`; // El que 
+          return datos;
+      }
+      return {};
+  }
+  else{
+      return Promise.reject(await response.json());
+  }
+}
+
+export async function updateData(URI,token,data){
+  let url = `https://pkmqkhcplryghnhstjpn.supabase.co/rest/v1/${URI}`;
+  let headersAux = {...headers, 
+      "Authorization" :"Bearer "+token,
+      "Prefer" : "return=representation"
+  };
+  let response = await supaRequest(url,'PATCH',headersAux,data);
+  return response;
+}
