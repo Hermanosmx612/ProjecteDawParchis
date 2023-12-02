@@ -7,6 +7,8 @@ import { readGameState } from "./services/http.js";
 import { GameView } from "./model/GameView.js";
 import { getIdGame } from "./services/http.js";
 import { GameStatus } from "./model/gameStatus.js";
+import { logout } from "./services/users.js";
+import { profileForm } from "./views/profile.js";
 
 export async function route(ruta) {
   // let params = ruta.split('?')[1];
@@ -68,6 +70,7 @@ export async function route(ruta) {
       window.location.hash = "#/";
       break;
     case "#/profile":
+      console.log("Funcion de profile")
       main.innerHTML = "";
       main.append(profileForm());
       break;

@@ -1,4 +1,4 @@
-import { signUpSupabase, loginSupabase } from "./http.js";
+import { signUpSupabase, loginSupabase, logoutSupabase } from "./http.js";
 
 
 
@@ -29,6 +29,7 @@ export function registerUser(email, password) {
     try {
       const dataLogin = await loginSupabase(email, password);
       console.log(dataLogin);
+      localStorage.setItem('email', dataLogin.user.email)
       localStorage.setItem('access_token', dataLogin.access_token);
       localStorage.setItem('uid', dataLogin.user.id);
       localStorage.setItem('expirationDate', expirationDate(dataLogin.expires_in));
@@ -42,3 +43,14 @@ export function registerUser(email, password) {
   
     return status;
   }
+
+
+  
+    export function logout() {
+      logoutSupabase(localStorage.getItem('access_token')).then((lOData) => {
+        console.log(lOData);
+      });
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('uid');
+    }
+  

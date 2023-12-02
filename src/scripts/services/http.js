@@ -114,4 +114,11 @@ export function knowDisabled(){
   return "true";
 }
 
+export async function logoutSupabase(token){
+  const url = `https://pkmqkhcplryghnhstjpn.supabase.co/auth/v1/logout`;
+  const headersAux = { ...headers, Authorization: `Bearer ${token}` };
+  const data = await supaRequest(url, 'post', headersAux, {});
+  return data;
+}
+
 

@@ -11,32 +11,21 @@ function menu (){
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="#/profile">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link ${knowLogin()}" href="#/allgames" aria-disabled="${knowDisabled()}">Your Games</a>
+            <a class="nav-link ${knowLogin()}" href="#/allgames" aria-disabled="${knowDisabled()}">Search games</a>
           </li>
-          <li class="nav-item">
-          <a class="nav-link" href="#/login">Login</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link" href="#/register">Register</a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" href="#/login">Login</a>
-        </li>
         <li class="nav-item">
           <a class="nav-link" href="#/logout">Logout</a>
         </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
-          </li>
+
         </ul>
       </div>
     </div>
   </nav>`
 
-  let headerMenu = document.querySelector("#menuSuperior");
+  let headerMenu =  document.createElement("div")
   headerMenu.innerHTML = templateMenu
   return headerMenu;
 
