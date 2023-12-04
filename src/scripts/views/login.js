@@ -1,4 +1,5 @@
 import { loginUser } from "../services/users.js";
+import { recoverPasswordSupabase } from "../services/http.js";
 
 export function loginForm() {
     const divLogin = document.createElement('div');
@@ -48,7 +49,7 @@ export function loginForm() {
     divLogin.querySelector('#forgotPassword').addEventListener('click', (event) => {
       event.preventDefault();
       const email = divLogin.querySelector('#loginemail').value;
-      forgotPassword(email);
+      recoverPasswordSupabase(email);
       event.target.parentElement.append('You have an Email');
     });
   

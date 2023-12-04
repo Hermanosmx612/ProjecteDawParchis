@@ -1,4 +1,5 @@
 import { updateProfile } from "../services/users.js";
+import { getDataProfile } from "../services/http.js";
 
 export function profileForm(){
     const divLogin = document.createElement('div');
@@ -19,24 +20,6 @@ export function profileForm(){
     readonly
     value="${localStorage.getItem('email')}"
   />
-
-  <label for="psw"><b>Password</b></label>
-  <input
-    type="password"
-    id="signuppassword"
-    placeholder="Enter Password"
-    name="psw"
-    required
-  />
-
-  <label for="psw-repeat"><b>Repeat Password</b></label>
-  <input
-    type="password"
-    placeholder="Repeat Password"
-    name="psw-repeat"
-    required
-  />
-  <button type="button" class="signupbtn login" id="chgpass">Change Password</button>
   <br>
   <label for="username"><b>Username</b></label>
   <input
@@ -75,6 +58,11 @@ export function profileForm(){
   </div>
 </div>
 </form>`;
+
+getDataProfile(localStorage.getItem("uid")).then((respuesta) => {
+  divLogin.querySelector("input[name='username']").value = respuesta[0].username;
+  divLogin.querySelector("input[name='full_name']").value = respuesta[0].full_name;
+})
 
 divLogin.querySelector('#update').addEventListener('click', async () => {
   const formData = new FormData(divLogin.querySelector('#formProfile'));

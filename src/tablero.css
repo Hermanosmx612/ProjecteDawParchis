@@ -302,7 +302,7 @@ body {
     box-sizing: border-box;
   }
   
-  button {
+  button[type="submit"] {
     background-color: #4caf50;
     color: white;
     padding: 10px 15px;
@@ -333,3 +333,17 @@ body {
       width: 80%;
     }
   }
+
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px; /* Ajusta la altura según tu necesidad */
+    width: 50px; /* Ajusta el ancho según tu necesidad */
+    border-radius: 50%; /* Hace el logo redondito */
+    background-color: #3498db; /* Cambia el color de fondo según tu preferencia */
+    color: #ffffff; /* Cambia el color del texto según tu preferencia */
+    font-size: 16px; /* Ajusta el tamaño del texto según tu preferencia */
+    font-weight: bold;
+}

@@ -1,5 +1,5 @@
 export { menu };
-import { knowLogin, knowDisabled, getImageProfile } from "../services/http.js";
+import { knowLogin, knowDisabled, getUrlImage, fetchSupabaseImage } from "../services/http.js";
 
 
 function menu (){
@@ -25,18 +25,28 @@ function menu (){
     <img src="" alt="">
   </nav>`
 
-  let url; 
-  getImageProfile(localStorage.getItem('uid')).then((resultado)=>{
+  
+  /* getImageProfile(localStorage.getItem('uid')).then((resultado)=>{
       url = resultado;
       let img = headerMenu.querySelector("img");
       img.src = url;
-  })
+  }) */
+
 
 
   let headerMenu =  document.createElement("div")
-
-
   headerMenu.innerHTML = templateMenu
+
+  getUrlImage(localStorage.getItem('uid')).then((urlImage)=>{
+    
+    fetchSupabaseImage(urlImage).then(blobUrl => {
+      if (blobUrl) {
+        let img = headerMenu.querySelector("img");
+        img.src = blobUrl;
+        img.classList.add("logo")
+    }
+  });
+})
 
   
   

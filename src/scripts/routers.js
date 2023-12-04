@@ -66,6 +66,7 @@ export async function route(ruta) {
       main.append(registerForm());
       break;
     case "#/logout":
+      localStorage.clear();
       logout();
       window.location.hash = "#/";
       break;
