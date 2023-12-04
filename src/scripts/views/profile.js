@@ -1,6 +1,5 @@
 import { updateProfile } from "../services/users.js";
 
-
 export function profileForm(){
     const divLogin = document.createElement('div');
     divLogin.classList.add('formulari_centrat');
@@ -88,7 +87,7 @@ divLogin.querySelector('#update').addEventListener('click', async () => {
 
   const dataUpdate = await updateProfile({username, full_name, avatar,});
 
-  route('#/profile');
+  window.location.hash = "#/game"
 });
 
 function encodeImageFileAsURL(element) {

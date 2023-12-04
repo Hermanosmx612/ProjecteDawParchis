@@ -172,7 +172,7 @@ export async function fileRequest(url,body,token){
   if(response.status >=200 && response.status <=300){
       if(response.headers.get("content-type")){
           let datos = await response.json(); // Retorna un json amb la ruta relativa. 
-          datos.urlAvatar = `https://pkmqkhcplryghnhstjpn.supabase.co/{url}`; // El que 
+          datos.urlAvatar = `https://pkmqkhcplryghnhstjpn.supabase.co/${url}`; // El que 
           return datos;
       }
       return {};
@@ -190,4 +190,24 @@ export async function updateData(URI,token,data){
   };
   let response = await supaRequest(url,'PATCH',headersAux,data);
   return response;
+}
+
+export async function getImageProfile(uid){
+const response = await fetch(`https://pkmqkhcplryghnhstjpn.supabase.co/rest/v1/profiles?id=eq.${uid}&select=avatar_url`, {
+  headers: {
+      apiKey: SUPABASE_KEY,
+      "Authorization": `Bearer ${SUPABASE_KEY}`,
+      "Range": "0-9",
+  }
+});
+
+// Verificar si la respuesta es exitosa (código 2xx)
+if (!response.ok) {
+  throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+}
+
+// Parsear la respuesta como JSON
+const data = await response.json();
+//console.log(data[0].avatar_url)
+return data[0].avatar_url;
 }

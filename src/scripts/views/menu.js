@@ -1,5 +1,5 @@
 export { menu };
-import { knowLogin, knowDisabled } from "../services/http.js";
+import { knowLogin, knowDisabled, getImageProfile } from "../services/http.js";
 
 
 function menu (){
@@ -19,14 +19,27 @@ function menu (){
         <li class="nav-item">
           <a class="nav-link" href="#/logout">Logout</a>
         </li>
-
         </ul>
       </div>
     </div>
+    <img src="" alt="">
   </nav>`
 
+  let url; 
+  getImageProfile(localStorage.getItem('uid')).then((resultado)=>{
+      url = resultado;
+      let img = headerMenu.querySelector("img");
+      img.src = url;
+  })
+
+
   let headerMenu =  document.createElement("div")
+
+
   headerMenu.innerHTML = templateMenu
+
+  
+  
   return headerMenu;
 
 
