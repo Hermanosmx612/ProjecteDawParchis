@@ -14,7 +14,7 @@ function menu (){
             <a class="nav-link active" aria-current="page" href="#/profile">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link ${knowLogin()}" href="#/allgames" aria-disabled="${knowDisabled()}">Search games</a>
+            <a class="nav-link" href="#/allgames" >Active games</a>
           </li>
         <li class="nav-item">
           <a class="nav-link" href="#/logout">Logout</a>

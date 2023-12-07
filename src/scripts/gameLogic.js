@@ -210,7 +210,7 @@ export function knowWhereBridge(game, posiActual, posiAdvance){
   } else {
     for (let i = 0; i < game.tablero.length; i++) {
       let fichas = game.tablero[i].fichas;
-      for (let j = 0; j < fichas.length; j++) {
+      for (let j = 0; j < fichas.length - 1; j++) {
         if (i > posiActual + 1 && i <= posiAdvance) {
           if (fichas.length >= 2) {
             if (fichas[j].color === fichas[j + 1].color) {
@@ -275,3 +275,32 @@ export function knowBridgeMultiColour(posicion, game){
 }
 
 
+export function changeStateToTokenWin(game, posiActual, colorFichas) {
+  console.log("Posicion Actual" + posiActual);
+  console.log("Jugador color fichas" + colorFichas);
+
+  for (let i = 0; i < game.tablero.length; i++) {
+    let fichas = game.tablero[i].fichas;
+
+    for (let j = 0; j < fichas.length; j++) {
+      console.log(fichas[j]);
+
+      if (fichas[j].numCasilla === posiActual && fichas[j].color === colorFichas) {
+        // Eliminar la ficha del array
+        fichas.splice(j, 1); 
+      }
+    }
+  }
+}
+
+
+export function changePlayerTokenStatus(game){
+  let actualPlayer = game.players[game.turno];
+  for (let i = 0; i < actualPlayer.fichas.length; i++) {
+    let fichas = actualPlayer.fichas[i];
+    if (fichas.estado === "dentro_del_tablero") {
+      fichas.estado = "fuera_del_tablero_win";
+      break;
+    }
+  }
+}

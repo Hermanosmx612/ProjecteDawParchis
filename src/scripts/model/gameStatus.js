@@ -175,7 +175,7 @@ export class GameStatus {
     for(const tablero of game.tablero){
       for(const token of tablero.fichas){
         const segurosArray = game.seguros;
-        if(token.numCasilla === posiAdvance && !segurosArray.includes(posiAdvance)){ // && !segurosArray.includes(posiAdvance)
+        if(token.numCasilla === posiAdvance){ // && !segurosArray.includes(posiAdvance)
           if (tablero.fichas.length === 1 && token.color !== actualPlayer.colorFichas) {
             return true;
           }
@@ -183,6 +183,21 @@ export class GameStatus {
       }
     }
     return false;
+  }
+
+
+  compIfWin(game){
+    let actualPlayer = game.players[game.turno];
+    let count = 0;
+  for (let i = 0; i < actualPlayer.fichas.length; i++) {
+    let fichas = actualPlayer.fichas[i];
+    if (fichas.estado === "fuera_del_tablero_win") {
+      count ++;
+    }
+    if(count === 4){
+      alert("Ha ganado el jugador "+actualPlayer.colorFichas)
+    }
+  }
   }
 
   
