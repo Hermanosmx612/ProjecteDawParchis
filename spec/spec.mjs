@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter, compPuenteInitMoreFin, compPuente, encontrarElementosRepetidos } from "../src/scripts/gameLogic.js";
+import { capitalizeFirstLetter, compPuenteInitMoreFin, compPuente, encontrarElementosRepetidos,changeStatusToken } from "../src/scripts/gameLogic.js";
 import { GameStatus } from "../src/scripts/model/gameStatus.js";
 import { createTable } from "../src/scripts/initiation.js";
 
@@ -35,5 +35,12 @@ it('should return an array with repeated elements when given an array with at le
     const arr = [1, 2, 3, 4, 5, 2];
     const result = encontrarElementosRepetidos(arr);
     expect(result).toEqual([2]);
-  });
+});
+it('Change Status Token', function() {
+  let gameMod = structuredClone(gameBase)
+  gameMod.players[0].fichas[0].estado = "dentro_del_tablero"
+  changeStatusToken(gameMod);
+  expect(gameMod.players[0].fichas[0].estado).toBe("fuera_del_tablero");
+
+});
 
