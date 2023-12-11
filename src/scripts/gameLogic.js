@@ -38,7 +38,7 @@ export function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function compPuenteInitMoreFin(posiInitial, posiFinal, game) {
+export function compPuenteInitMoreFin(posiInitial, posiFinal, game) {
   for (let i = 1; i <= posiFinal; i++) {
     let fichas = game.tablero[i].fichas;
     for (let j = 0; j < fichas.length; j++) {
@@ -100,7 +100,7 @@ export function knowPosiTokens(game) {
 }
 
 export function encontrarElementosRepetidos(arr) {
-  return arr.filter((elemento, indice) => arr.indexOf(elemento) !== indice);
+  return arr.filter((elemento, indice) => arr.indexOf(elemento) !== indice); // Aqui un filter
 }
 
 export function compIfAllBlocked(game) {

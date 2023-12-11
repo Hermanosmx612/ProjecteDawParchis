@@ -40,27 +40,27 @@ export function tablero(gameState){
   </tr>
   <tr>
     <td colspan="2" id="3">3</td>
-    <td class="amarillo" colspan="2">-</td>
+    <td class="amarillo" colspan="2"></td>
     <td colspan="2" id="65">65</td>
   </tr>
   <tr>
     <td colspan="2" id="4">4</td>
-    <td class="amarillo" colspan="2">-</td>
+    <td class="amarillo" colspan="2"></td>
     <td colspan="2" id="64">64</td>
   </tr>
   <tr>
     <td class="amarillo" colspan="2" id="5">5</td>
-    <td class="amarillo" colspan="2">-</td>
+    <td class="amarillo" colspan="2"></td>
     <td colspan="2" id="63">63</td>
   </tr>
   <tr>
     <td colspan="2" id="6">6</td>
-    <td class="amarillo" colspan="2">-</td>
+    <td class="amarillo" colspan="2"></td>
     <td colspan="2" id="62">62</td>
   </tr>
   <tr>
     <td colspan="2" id="7">7</td>
-    <td class="amarillo" colspan="2">-</td>
+    <td class="amarillo" colspan="2"></td>
     <td colspan="2" id="61">61</td>
   </tr>
   <tr>
@@ -73,8 +73,8 @@ export function tablero(gameState){
     <td rowspan="2" id="10">10</td>
     <td id="vacio"></td>
     <td id="8">8</td>
-    <td>-</td>
-    <td>-</td>
+    <td></td>
+    <td></td>
     <td id="60">60</td>
     <td id="vacio"></td>
     <td rowspan="2" id="58">58</td>
@@ -94,20 +94,20 @@ export function tablero(gameState){
   </tr>
   <tr>
     <td rowspan="2" id="17">17</td>
-    <td class="azul" rowspan="2">|</td>
-    <td class="azul" rowspan="2">|</td>
-    <td class="azul" rowspan="2">|</td>
-    <td class="azul" rowspan="2">|</td>
-    <td class="azul" rowspan="2">|</td>
-    <td class="azul" rowspan="2">|</td>
+    <td class="azul" rowspan="2"></td>
+    <td class="azul" rowspan="2"></td>
+    <td class="azul" rowspan="2"></td>
+    <td class="azul" rowspan="2"></td>
+    <td class="azul" rowspan="2"></td>
+    <td class="azul" rowspan="2"></td>
     <td>|</td>
     <td>|</td>
-    <td class="verde" rowspan="2">|</td>
-    <td class="verde" rowspan="2">|</td>
-    <td class="verde" rowspan="2">|</td>
-    <td class="verde" rowspan="2">|</td>
-    <td class="verde" rowspan="2">|</td>
-    <td class="verde" rowspan="2">|</td>
+    <td class="verde" rowspan="2"></td>
+    <td class="verde" rowspan="2"></td>
+    <td class="verde" rowspan="2"></td>
+    <td class="verde" rowspan="2"></td>
+    <td class="verde" rowspan="2"></td>
+    <td class="verde" rowspan="2"></td>
     <td rowspan="2" id="51">51</td>
   </tr>
   <tr>
@@ -149,7 +149,7 @@ export function tablero(gameState){
       <img id="" alt="" srcset="">
     </td>
     <td colspan="2" id="27">27</td>
-    <td class="rojo" colspan="2">-</td>
+    <td class="rojo" colspan="2"></td>
     <td colspan="2" id="41">41</td>
     <td class="rojo rojoCasa" colspan="7" rowspan="7" id="home">
       <img id="" alt="" srcset="">
@@ -161,27 +161,27 @@ export function tablero(gameState){
   </tr>
   <tr>
     <td colspan="2" id="28">28</td>
-    <td class="rojo" colspan="2">-</td>
+    <td class="rojo" colspan="2"></td>
     <td colspan="2" id="40">40</td>
   </tr>
   <tr>
     <td colspan="2" id="29">29</td>
-    <td class="rojo" colspan="2">-</td>
+    <td class="rojo" colspan="2"></td>
     <td class="rojo" id="39" colspan="2">39   </td>
   </tr>
   <tr>
     <td colspan="2" id="30">30</td>
-    <td class="rojo" colspan="2">-</td>
+    <td class="rojo" colspan="2"></td>
     <td colspan="2" id="38">38</td>
   </tr>
   <tr>
     <td colspan="2" id="31">31</td>
-    <td class="rojo" colspan="2">-</td>
+    <td class="rojo" colspan="2"></td>
     <td colspan="2" id="37">37</td>
   </tr>
   <tr>
     <td colspan="2" id="32">32</td>
-    <td class="rojo" colspan="2">-</td>
+    <td class="rojo" colspan="2"></td>
     <td colspan="2" id="36">36</td>
   </tr>
   <tr>
@@ -190,8 +190,7 @@ export function tablero(gameState){
     <td colspan="2" id="35">35</td>
   </tr>
 
-</table>
-<button id="prueba">Recorrer array</button>`
+</table>`
 let gameView;
 let game = new GameStatus();
 console.log(gameState)
