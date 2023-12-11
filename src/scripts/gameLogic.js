@@ -1,8 +1,8 @@
 import { mostrarDado } from "./view.js";
 
 export function aleatoriNumber() {
-  // let result = Math.ceil(Math.random() * 6);
-  // return result;
+   let result = Math.ceil(Math.random() * 6);
+   return result;
   let numeroAleatorio = Math.floor(Math.random() * 2) + 5;
   //let numeroAleatorio = 5;
   return numeroAleatorio;
@@ -288,9 +288,11 @@ export function changeStateToTokenWin(game, posiActual, colorFichas) {
       if (fichas[j].numCasilla === posiActual && fichas[j].color === colorFichas) {
         // Eliminar la ficha del array
         fichas.splice(j, 1); 
+        return true;
       }
     }
   }
+  return false;
 }
 
 
